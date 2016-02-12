@@ -37,7 +37,7 @@ var camera:SCNNode!
 var ground:SCNNode!
 var scene:SCNScene!
 ```
-Adicione uma função para criara cena:
+Adicione uma função para criar a cena:
 ```Swift
 func createScene () {
   scene = SCNScene()
@@ -55,7 +55,7 @@ func createCamera () {
   camera = SCNNode()
   camera.camera = SCNCamera()
   camera.position = SCNVector3(x: 0, y: 25, z: -18)
-  camera.eulerAngles = SCNVector3(x: 0, y: 0, z: 0)
+  camera.eulerAngles = SCNVector3(x: -1, y: 0, z: 0)
   camera.camera?.aperture = 1/2
   scene.rootNode.addChildNode(camera)
 }
@@ -81,3 +81,6 @@ override func viewDidLoad() {
   createGround()
 }
 ```
+
+Compile e rode e veja nosso cenário inicial. Use gestos para circular pelo terreno tridimensional.
+![](https://github.com/luksfarris/carRush/blob/master/img/img2.png "Cenário inicial")
