@@ -6,7 +6,7 @@ Este artigo pertence à série de artigos equinociOS, e aqui irei tratar do fram
 
 ---
 
-Durante este texto iremos recriar juntos o fantástico jogo [2 cars] (https://itunes.apple.com/en/app/2-cars/id936839198?mt=8), mas em um ambiente tridimensional. Com isso aprenderemos sobre:
+Durante este texto iremos recriar juntos uma versão minimalista do fantástico jogo [2 cars] (https://itunes.apple.com/en/app/2-cars/id936839198?mt=8), mas em um ambiente tridimensional. Com isso aprenderemos sobre:
 - Física e colisões
 - Texturas e modelos 3d
 - Sistemas de partícula
