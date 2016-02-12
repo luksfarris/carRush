@@ -11,3 +11,8 @@ Durante este texto iremos recriar juntos o fantástico jogo [2 cars](https://itu
 - Texturas e modelos 3d
 - Sistemas de partícula
 - Animacões e interacão com o usuário
+
+###Capítulo 1: Criando o projeto
+Comece tendo certeza que seu XCode está atualizado, pelo menos na versão `Version 7.2`. Crie um novo projeto, do tipo `Game`, escolha `Swift` para a linguagem, `SceneKit` como tecnologia, e `Universal` nos dispositivos. Salve onde preferir.
+
+![](https://github.com/luksfarris/carRush/blob/master/img/img1.png "Configuracão do projeto")
