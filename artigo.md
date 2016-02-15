@@ -2,9 +2,10 @@
 
 ######Autor: Lucas Farris (@luksfarris)
 
-Este artigo pertence à série de artigos equinociOS, e aqui irei tratar do framework [SceneKit](https://developer.apple.com/library/ios/documentation/SceneKit/Reference/SceneKit_Framework/), que é uma bibiliteca para desenvolvimento de gráficos 3d de alta performance. O código será escrito em `Swift`, e um exemplo completo do projeto pode ser encontrado [neste repositório](https://github.com/luksfarris/carRush).
+Este artigo pertence à série de artigos equinociOS, e aqui irei tratar do framework [SceneKit](https://developer.apple.com/library/ios/documentation/SceneKit/Reference/SceneKit_Framework/), que é uma bibiliteca para desenvolvimento de gráficos 3d de alta performance. O código será escrito em `Swift`, e um exemplo completo do projeto pode ser encontrado [neste repositório](https://github.com/luksfarris/carRush). O presente artigo está licensiado como [CC - Creative Commons](https://creativecommons.org/).
 
 ---
+###Prólogo: Declarações iniciais e criando o projeto.
 
 Durante este texto iremos recriar juntos uma versão minimalista do fantástico jogo [2 cars] (https://itunes.apple.com/en/app/2-cars/id936839198?mt=8), mas em um ambiente tridimensional. Com isso aprenderemos sobre:
 - Física e colisões
@@ -12,9 +13,9 @@ Durante este texto iremos recriar juntos uma versão minimalista do fantástico 
 - Sistemas de partícula
 - Animações e interação com o usuário
 
-Para acompanhar não é necessário conhecimento prévio de Swift, apenas de programação básica, e algumas noções de geometria.
+Para acompanhar não é necessário conhecimento prévio de `Swift`, apenas de programação básica, algumas noções de geometria, e um pouco de conhecimento do `XCode`.
 
-###Prólogo: Criando o projeto
+
 Comece tendo certeza que seu XCode está atualizado, pelo menos na versão `Version 7.2`. Crie um novo projeto, do tipo `Game`, escolha `Swift` para a linguagem, `SceneKit` como tecnologia, e `Universal` nos dispositivos. Salve onde preferir.
 
 ![](https://github.com/luksfarris/carRush/blob/master/img/img1.png "Configuracão do projeto")
@@ -180,3 +181,17 @@ func move(sender: UITapGestureRecognizer){
 Rode. O resultado deve ser algo como:
 
 ![](https://github.com/luksfarris/carRush/blob/master/img/gif2.gif "Temos um carro!")
+
+###Capítulo 3: Obstáculos e recompensas!
+######No qual aprendemos a criar inimigos, física e colisões.
+
+###Epílogo: Pra onde ir agora.
+Como desafio, sugiro as seguintes modificações:
+- Mostrar o score na tela;
+- Adicionar `Swag` no movimento do carrinho;
+- Desligar o `autoenablesDefaultLighting` da cena, e adicionar farois ao carrinho;
+- Criar um modo POV onde a camera vai parar dentro do carrinho;
+- Adicionar mais faixas, mais inimigos, ou até mais um carro (como é o jogo 2 Cars);
+
+Espero que tenha gostado do texto, fique ligado nos demais artigos dessa série. Qualquer dúvida, reclamação, sugestão, o repositório [https://github.com/luksfarris/carRush](https://github.com/luksfarris/carRush) é o melhor lugar para me achar. Abra uma `Issue`, faça um `Pull Request`, brinque com o código, enfim: Divirta-se!
+
