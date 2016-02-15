@@ -6,7 +6,7 @@ Este artigo pertence à série de artigos equinociOS, e aqui irei tratar do fram
 
 ---
 
-Durante este texto iremos recriar juntos o fantástico jogo [2 cars] (https://itunes.apple.com/en/app/2-cars/id936839198?mt=8), mas em um ambiente tridimensional. Com isso aprenderemos sobre:
+Durante este texto iremos recriar juntos uma versão minimalista do fantástico jogo [2 cars] (https://itunes.apple.com/en/app/2-cars/id936839198?mt=8), mas em um ambiente tridimensional. Com isso aprenderemos sobre:
 - Física e colisões
 - Texturas e modelos 3d
 - Sistemas de partícula
@@ -22,6 +22,7 @@ Comece tendo certeza que seu XCode está atualizado, pelo menos na versão `Vers
 No projeto criado, voce poderá encontrar o arquivo `GameViewController.swift`. Abra ele e vamos comecar!
 
 ###Capítulo 1: Luzes, Camera e Ação!
+######A parte em que aprendemos a criar cameras, posicionar elementos, criar materiais e adicionar objetos à cena.
 Apague tudo na classe GameView Controller, e deixe apenas:
 
 ```Swift
@@ -37,7 +38,7 @@ var camera:SCNNode!
 var ground:SCNNode!
 var scene:SCNScene!
 ```
-Adicione uma função para criara cena:
+Adicione uma função para criar a cena:
 ```Swift
 func createScene () {
   scene = SCNScene()
@@ -55,7 +56,7 @@ func createCamera () {
   camera = SCNNode()
   camera.camera = SCNCamera()
   camera.position = SCNVector3(x: 0, y: 25, z: -18)
-  camera.eulerAngles = SCNVector3(x: 0, y: 0, z: 0)
+  camera.eulerAngles = SCNVector3(x: -1, y: 0, z: 0)
   camera.camera?.aperture = 1/2
   scene.rootNode.addChildNode(camera)
 }
@@ -81,3 +82,6 @@ override func viewDidLoad() {
   createGround()
 }
 ```
+
+Compile e rode e veja nosso cenário inicial. Use gestos para circular pelo terreno tridimensional.
+![](https://github.com/luksfarris/carRush/blob/master/img/img2.png "Cenário inicial")
