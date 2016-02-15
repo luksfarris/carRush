@@ -22,7 +22,7 @@ Comece tendo certeza que seu XCode está atualizado, pelo menos na versão `Vers
 No projeto criado, voce poderá encontrar o arquivo `GameViewController.swift`. Abra ele e vamos comecar!
 
 ###Capítulo 1: Luzes, Camera e Ação!
-######A parte em que aprendemos a criar cameras, posicionar elementos, criar materiais e adicionar objetos à cena.
+######No qual aprendemos a criar cameras, posicionar elementos, criar materiais e adicionar objetos à cena.
 Apague tudo na classe GameView Controller, e deixe apenas:
 
 ```Swift
@@ -85,3 +85,32 @@ override func viewDidLoad() {
 
 Compile e rode e veja nosso cenário inicial. Use gestos para circular pelo terreno tridimensional.
 ![](https://github.com/luksfarris/carRush/blob/master/img/img2.png "Cenário inicial")
+
+###Capítulo 2: A jornada do herói.
+######No qual aprendemos criar ou importar objetos tridimensionais, animá-los e a interagir com o usuário.
+
+Vamos criar um tímido cenário? Faremos uma faixa na nossa rodovia! Adicione este método e chame-o no `ViewDidLoad`:
+```Swift
+func createScenario() {
+  for i in 20...70 {
+    let laneMaterial = SCNMaterial()
+    if i%5<2 { // se a divisao de i por 5 for igual a 0 ou 1
+      laneMaterial.diffuse.contents = UIColor.clearColor()
+    } else { // se a divisao de i por 5 for 2,3 ou 4
+      laneMaterial.diffuse.contents = UIColor.blackColor()
+    }
+    let laneGeometry = SCNBox(width: 0.2, height: 0.1, length: 1, chamferRadius:0)
+    laneGeometry.materials = [laneMaterial]
+    let lane = SCNNode(geometry: laneGeometry)
+    lane.position = SCNVector3(x: 0, y: 0, z: -Float(i))
+    scene.rootNode.addChildNode(lane)
+    let moveDown = SCNAction.moveByX(0, y:0 , z: 5, duration: 0.3)
+    let moveUp = SCNAction.moveByX(0, y: 0, z: -5, duration: 0)
+    let moveLoop = SCNAction.repeatActionForever(SCNAction.sequence([moveDown, moveUp]))
+    lane.runAction(moveLoop)
+  }
+}
+```
+Ok, tem muita coisa acontecendo aqui, vamos por partes. Estamos dentro de um *loop*, no qual `i` vai assumir todos os valores entre `20` e `70`. Em cada iteração, colocamos um pequeno tijolinho, `preto` ou `transparente`, dependendo de `i`. Note que isso vai colocar tres tijolinhos pretos, e dois transparentes.
+Em seguida, adicionamos uma animação ao conjunto. Todos os tijolinhos estão sujeitos a duas animações: `moveUp` e `moveDown`. A animação `moveLoop` combina as duas (usando o método `sequence`), e as repete para sempre (usando `repeatActionForever`). Por fim, `runAction`, que pode ser chamado a qualquer `SCNNode`, aplica a animação em cada um de nossos tijolinhos. Como cada faixa tem 3 tijolinhos pretos + 2 transparentes, nós andamos `5` pra baixo em `0.3` segundos, e instanteneamente subimos `5` pra dar a impressão de que é um movimento contínuo. Tente remover `moveUp` como experimento. Eis o resultado até agora:
+![](https://github.com/luksfarris/carRush/blob/master/img/gif1.png "Faixa!")
