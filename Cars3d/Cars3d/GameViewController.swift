@@ -15,6 +15,8 @@ class GameViewController: UIViewController {
     var ground:SCNNode!
     var car:SCNNode!
     var scene:SCNScene!
+    var sceneView:SCNView!
+    var onLeftLane:Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +25,21 @@ class GameViewController: UIViewController {
         createGround()
         createScenario()
         createPlayer()
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action:"move:")
+        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "move:")
+        sceneView.addGestureRecognizer(tapGestureRecognizer)
+        sceneView.addGestureRecognizer(swipeGestureRecognizer)
+    }
+    
+    func move(sender: UITapGestureRecognizer){
+        let position = sender.locationInView(self.view) // pegamos a localizacao do gesto
+        let right = position.x > self.view.frame.size.width/2 // se o gesto foi na esquerda ou direita da tela
+        if right == onLeftLane { // se estamos na esquerda querendo ir pra direita, ou na direita querendo ir pra esquerda
+            let moveSideways:SCNAction = SCNAction.moveByX((right ? 7.5:-7.5), y: 0, z: 0, duration: 0.2)
+            moveSideways.timingMode = SCNActionTimingMode.EaseInEaseOut // suaviza o inicio e o fim da animacao
+            car.runAction(moveSideways)
+            onLeftLane = !right // atualiza a posicao do carro
+        }
     }
     
     func createPlayer(){
@@ -39,7 +56,6 @@ class GameViewController: UIViewController {
         exausterNode.addParticleSystem(particleSystem!)
         car.addChildNode(exausterNode)
     }
-    
     
     func createScenario() {
         for i in 20...70 {
@@ -63,12 +79,12 @@ class GameViewController: UIViewController {
     
     func createScene () {
         scene = SCNScene()
-        let scnView = self.view as! SCNView
-        scnView.scene = scene
-        scnView.allowsCameraControl = true
-        scnView.showsStatistics = true
-        scnView.playing = true
-        scnView.autoenablesDefaultLighting = true
+        sceneView = self.view as! SCNView
+        sceneView.scene = scene
+        sceneView.allowsCameraControl = true
+        sceneView.showsStatistics = true
+        sceneView.playing = true
+        sceneView.autoenablesDefaultLighting = true
     }
     
     func createCamera () {
