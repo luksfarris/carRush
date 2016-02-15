@@ -177,3 +177,5 @@ func move(sender: UITapGestureRecognizer){
   }
 }
 ```
+Rode. O resultado deve ser algo como:
+![](https://github.com/luksfarris/carRush/blob/master/img/gif2.gif "Temos um carro!")
