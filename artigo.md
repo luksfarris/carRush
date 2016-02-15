@@ -22,6 +22,7 @@ Comece tendo certeza que seu XCode está atualizado, pelo menos na versão `Vers
 No projeto criado, voce poderá encontrar o arquivo `GameViewController.swift`. Abra ele e vamos comecar!
 
 ###Capítulo 1: Luzes, Camera e Ação!
+######A parte em que aprendemos a criar cameras, posicionar elementos, criar materiais e adicionar objetos à cena.
 Apague tudo na classe GameView Controller, e deixe apenas:
 
 ```Swift
