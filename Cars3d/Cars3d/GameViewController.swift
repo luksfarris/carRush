@@ -13,6 +13,7 @@ import SceneKit
 class GameViewController: UIViewController {
     var camera:SCNNode!
     var ground:SCNNode!
+    var car:SCNNode!
     var scene:SCNScene!
     
     override func viewDidLoad() {
@@ -21,7 +22,24 @@ class GameViewController: UIViewController {
         createCamera()
         createGround()
         createScenario()
+        createPlayer()
     }
+    
+    func createPlayer(){
+        let carScene = SCNScene(named: "car.scn")
+        car = carScene!.rootNode.childNodeWithName("car", recursively: true)
+        scene.rootNode.addChildNode(car)
+        car.position = SCNVector3(-2.5,0,-25) // colocamos ele na frente da camera
+        car.eulerAngles = SCNVector3(0,M_PI_2,0) // rodamos 90 graus ortogonalmente ao chao
+        car.scale = SCNVector3(2,2,2) // duplicamos o tamanho do carro
+        
+        let particleSystem = SCNParticleSystem(named: "SmokeParticles", inDirectory: nil)
+        let exausterNode = SCNNode(geometry: SCNBox(width: 0, height: 0, length: 0, chamferRadius: 1))
+        exausterNode.position = SCNVector3(-1,0.2,-0.5)
+        exausterNode.addParticleSystem(particleSystem!)
+        car.addChildNode(exausterNode)
+    }
+    
     
     func createScenario() {
         for i in 20...70 {
