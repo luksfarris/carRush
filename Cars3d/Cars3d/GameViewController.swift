@@ -20,6 +20,27 @@ class GameViewController: UIViewController {
         createScene()
         createCamera()
         createGround()
+        createScenario()
+    }
+    
+    func createScenario() {
+        for i in 20...70 {
+            let laneMaterial = SCNMaterial()
+            if i%5<2 {
+                laneMaterial.diffuse.contents = UIColor.clearColor()
+            } else {
+                laneMaterial.diffuse.contents = UIColor.blackColor()
+            }
+            let laneGeometry = SCNBox(width: 0.2, height: 0.1, length: 1, chamferRadius:0)
+            laneGeometry.materials = [laneMaterial]
+            let lane = SCNNode(geometry: laneGeometry)
+            lane.position = SCNVector3(x: 0, y: 0, z: -Float(i))
+            scene.rootNode.addChildNode(lane)
+            let moveDown = SCNAction.moveByX(0, y:0 , z: 5, duration: 0.3)
+            let moveUp = SCNAction.moveByX(0, y: 0, z: -5, duration: 0)
+            let moveLoop = SCNAction.repeatActionForever(SCNAction.sequence([moveDown, moveUp]))
+            lane.runAction(moveLoop)
+        }
     }
     
     func createScene () {
@@ -45,7 +66,7 @@ class GameViewController: UIViewController {
         let groundGeometry = SCNFloor()
         groundGeometry.reflectivity = 0.5
         let groundMaterial = SCNMaterial()
-        groundMaterial.diffuse.contents = UIColor.darkGrayColor()
+        groundMaterial.diffuse.contents = UIColor.whiteColor()
         groundGeometry.materials = [groundMaterial]
         ground = SCNNode(geometry: groundGeometry)
         scene.rootNode.addChildNode(ground)
