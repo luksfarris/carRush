@@ -185,6 +185,74 @@ Rode. O resultado deve ser algo como:
 ###Capítulo 3: Obstáculos e recompensas!
 ######No qual aprendemos a criar inimigos, física e colisões.
 
+Vamos começar definindo quem serão nossas entidades capazes de interagir fisicamente entre si. Insira esse `enum` em seu `ViewController`:
+
+```Swift
+enum PhysicsCategory: Int {
+    case Player = 0, Mob, Ground, Wall
+}
+```
+
+Em seguida, no fim da função `createGround`, vamos dar um formato e um corpo pro nosso chão:
+```Swift
+let groundShape = SCNPhysicsShape(geometry: groundGeometry, options: nil)
+let groundBody = SCNPhysicsBody(type: .Kinematic, shape: groundShape)
+groundBody.friction = 0
+ground.physicsBody = groundBody
+groundBody.categoryBitMask = PhysicsCategory.Ground.rawValue
+groundBody.contactTestBitMask = PhysicsCategory.Mob.rawValue
+groundBody.collisionBitMask = PhysicsCategory.Ground.rawValue | PhysicsCategory.Mob.rawValue
+```
+
+Vamos rever nossos conceitos. `SCNFloor`, que é uma subclasse de `SCNGeometry`, contém uma descrição geométrica (uma equação paramétrica, no caso) que serve para desenhar o objeto na tela. 
+`SCNNode` é a classe que nos ajuda a compor nossa cena, estabelecendo uma hierarquia entre os objetos tridimensionais. `SCNPhysicsShape` é a casca do objeto, é o que será usado para que as
+colisões sejam testadas, simulando um volume sólido. `SCNPhysicsBody` é o corpo físico, onde podemos atribuir campos gravitacionais, eletromagnéticos, atrito, velocidade, aceleração e outras
+propriedades físicas.
+
+No nosso `groundBody` criamos 3 máscaras: 
+-`categoryBitMask`: nos ajuda a definir a qual categoria o objeto pertence. 
+-`contactTestBitMask`: define com quais objetos os testes de contato são feitos (veremos isso mais adiante). 
+-`collisionBitMask`: cotra quais outras categorias esse objeto colide.
+
+Vamos criar alguns inimigos então? Adicione a chamada `spawnMobs()` no final do seu `viewDidLoad()`, e os seguintes métodos:
+
+```Swift
+func spawnEnemyMob() {
+    let enemyMaterial = SCNMaterial()
+    enemyMaterial.reflective.contents = UIColor.redColor()
+    let enemyGeometry = SCNBox(width: 3, height: 3, length: 3, chamferRadius: 0.2)
+    enemyGeometry.materials = [enemyMaterial]
+    let enemyNode = SCNNode(geometry: enemyGeometry)
+    let enemyShape = SCNPhysicsShape(geometry: enemyGeometry, options: nil)
+    let enemyBody = SCNPhysicsBody(type: .Dynamic, shape: enemyShape)
+    enemyBody.restitution = 1
+    enemyBody.velocity = SCNVector3Make(0, 0, 20)
+    enemyNode.physicsBody = enemyBody
+    enemyNode.position = SCNVector3(5,2,-140)     enemyBody.categoryBitMask = PhysicsCategory.Mob.rawValue
+    enemyBody.contactTestBitMask = PhysicsCategory.Player.rawValue
+    enemyBody.collisionBitMask = PhysicsCategory.Mob.rawValue | PhysicsCategory.Player.rawValue | PhysicsCategory.Ground.rawValue
+    scene.rootNode.addChildNode(enemyNode)
+}
+    
+func spawnFrienlyMob() {
+    spawnEnemyMob()
+}
+
+func spawnMobs() {
+    if (arc4random_uniform(2)==1){
+        spawnEnemyMob();
+    } else {
+        spawnFrienlyMob();
+    }
+}
+```
+
+Quase nada de novo aqui. `Restitution` é a capacidade do objeto quicar quanto colide com outro, 1 é o máximo. `Velocity` é a velocidade inicial que nosso objeto se encontrará quando aparecer na cena. Rode o código, voce deverá ver algo como:
+
+![](https://github.com/luksfarris/carRush/blob/master/img/gif3.gif "Inimigos!")
+
+
+
 ###Epílogo: Pra onde ir agora.
 Como desafio, sugiro as seguintes modificações:
 - Mostrar o score na tela;

@@ -18,6 +18,12 @@ class GameViewController: UIViewController {
     var sceneView:SCNView!
     var onLeftLane:Bool = true
     
+ 
+    enum PhysicsCategory: Int {
+        case Player = 0, Mob, Ground, Wall
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         createScene()
@@ -29,7 +35,39 @@ class GameViewController: UIViewController {
         let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "move:")
         sceneView.addGestureRecognizer(tapGestureRecognizer)
         sceneView.addGestureRecognizer(swipeGestureRecognizer)
+        spawnMobs()
     }
+    
+    func spawnEnemyMob() {
+        let enemyMaterial = SCNMaterial()
+        enemyMaterial.reflective.contents = UIColor.redColor()
+        let enemyGeometry = SCNBox(width: 3, height: 3, length: 3, chamferRadius: 0.2)
+        enemyGeometry.materials = [enemyMaterial]
+        let enemyNode = SCNNode(geometry: enemyGeometry)
+        let enemyShape = SCNPhysicsShape(geometry: enemyGeometry, options: nil)
+        let enemyBody = SCNPhysicsBody(type: .Dynamic, shape: enemyShape)
+        enemyBody.restitution = 1
+        enemyBody.velocity = SCNVector3Make(0, 0, 20)
+        enemyNode.physicsBody = enemyBody
+        enemyNode.position = SCNVector3(5,2,-140)
+        enemyBody.categoryBitMask = PhysicsCategory.Mob.rawValue
+        enemyBody.contactTestBitMask = PhysicsCategory.Player.rawValue
+        enemyBody.collisionBitMask = PhysicsCategory.Mob.rawValue | PhysicsCategory.Player.rawValue | PhysicsCategory.Ground.rawValue
+        scene.rootNode.addChildNode(enemyNode)
+    }
+    
+    func spawnFrienlyMob() {
+        spawnEnemyMob()
+    }
+    
+    func spawnMobs() {
+        if (arc4random_uniform(2)==1){
+            spawnEnemyMob();
+        } else {
+            spawnFrienlyMob();
+        }
+    }
+    
     
     func move(sender: UITapGestureRecognizer){
         let position = sender.locationInView(self.view) // pegamos a localizacao do gesto
@@ -103,6 +141,13 @@ class GameViewController: UIViewController {
         groundMaterial.diffuse.contents = UIColor.whiteColor()
         groundGeometry.materials = [groundMaterial]
         ground = SCNNode(geometry: groundGeometry)
+        let groundShape = SCNPhysicsShape(geometry: groundGeometry, options: nil)
+        let groundBody = SCNPhysicsBody(type: .Kinematic, shape: groundShape)
+        groundBody.friction = 0
+        ground.physicsBody = groundBody
+        groundBody.categoryBitMask = PhysicsCategory.Ground.rawValue
+        groundBody.contactTestBitMask = PhysicsCategory.Mob.rawValue
+        groundBody.collisionBitMask = PhysicsCategory.Ground.rawValue | PhysicsCategory.Mob.rawValue
         scene.rootNode.addChildNode(ground)
     }
     
