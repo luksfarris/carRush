@@ -209,10 +209,11 @@ Vamos rever nossos conceitos. `SCNFloor`, que é uma subclasse de `SCNGeometry`,
 colisões sejam testadas, simulando um volume sólido. `SCNPhysicsBody` é o corpo físico, onde podemos atribuir campos gravitacionais, eletromagnéticos, atrito, velocidade, aceleração e outras
 propriedades físicas.
 
-No nosso `groundBody` criamos 3 máscaras: 
--`categoryBitMask`: nos ajuda a definir a qual categoria o objeto pertence. 
--`contactTestBitMask`: define com quais objetos os testes de contato são feitos (veremos isso mais adiante). 
--`collisionBitMask`: cotra quais outras categorias esse objeto colide.
+No nosso `groundBody` criamos 3 máscaras:
+
+- `categoryBitMask`: nos ajuda a definir a qual categoria o objeto pertence. 
+- `contactTestBitMask`: define com quais objetos os testes de contato são feitos (veremos isso mais adiante). 
+- `collisionBitMask`: cotra quais outras categorias esse objeto colide.
 
 Vamos criar alguns inimigos então? Adicione a chamada `spawnMobs()` no final do seu `viewDidLoad()`, e os seguintes métodos:
 
